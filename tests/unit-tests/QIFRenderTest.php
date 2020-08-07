@@ -1,15 +1,18 @@
 <?php
+
+use Carbon\Carbon;
 use StephenHarris\QIF\Transaction;
 use StephenHarris\QIF\Writer;
+use StephenHarris\QIF\Enums\HeaderLines;
 
 class QIFRenderTest extends PHPUnit_Framework_TestCase {
 
 	public function testRenderingCashTransaction() {
 			$transaction = new Transaction(
-				Transaction::CASH
+				HeaderLines::CASH
 			);
 
-			$transaction->setDate( new \DateTime( '2017-12-31' ) )
+			$transaction->setDate(new Carbon('2017-12-31'))
 				->setDescription( 'invoice-123: Some Payment' )
 				->setAmount( 68.99 )
 				->setCategory( 'Sales' )
@@ -28,8 +31,8 @@ class QIFRenderTest extends PHPUnit_Framework_TestCase {
 
 			$qif = new Writer();
 
-			$qif->addTransaction( (new Transaction(Transaction::CASH ))
-				->setDate( new \DateTime( '2016-11-01' ) )
+			$qif->addTransaction( (new Transaction(HeaderLines::CASH ))
+				->setDate( new Carbon( '2016-11-01' ) )
 				->setDescription( 'invoice-3027: Express Checkout Payment - #AMA63142DF230151S' )
 				->setAmount( 9.33 )
 				->setCategory( 'Express Checkout' )
@@ -38,8 +41,8 @@ class QIFRenderTest extends PHPUnit_Framework_TestCase {
 				->markReconciled()
 			);
 
-			$qif->addTransaction( (new Transaction(Transaction::CASH ))
-				->setDate( new \DateTime( '2016-11-01' ) )
+			$qif->addTransaction( (new Transaction(HeaderLines::CASH ))
+				->setDate( new Carbon( '2016-11-01' ) )
 				->setDescription( 'invoice-3028: Express Checkout Payment - #93672946MA543893H' )
 				->setAmount( 38.44 )
 				->setCategory( 'Express Checkout' )
@@ -48,8 +51,8 @@ class QIFRenderTest extends PHPUnit_Framework_TestCase {
 				->markReconciled()
 			);
 
-			$qif->addTransaction( (new Transaction(Transaction::CASH))
-				->setDate( new \DateTime( '2016-11-01' ) )
+			$qif->addTransaction( (new Transaction(HeaderLines::CASH))
+				->setDate( new Carbon( '2016-11-01' ) )
 				->setDescription( 'invoice-123: Payment Refund - #5P432542KC758251V' )
 				->setAmount( -9.48 )
 				->setCategory( 'Express Checkout' )
